@@ -6,6 +6,8 @@ const config = require('./config')
 const tokenList = {}
 const app = express()
 
+console.log(config);
+
 router.get('/', (req,res) => {
     res.send('Ok');
 })
@@ -17,7 +19,7 @@ router.post('/login', (req,res) => {
         "name": postData.name
     }
     // do the database authentication here, with user name and password combination.
-    const token = jwt.sign(user, config.secret, { expiresIn config.tokenLife})
+    const token = jwt.sign(user, config.secret, { expiresIn: config.tokenLife})
     const refreshToken = jwt.sign(user, config.refreshTokenSecret, { expiresIn: config.refreshTokenLife})
     const response = {
         "status": "Logged in",
