@@ -18,17 +18,22 @@
 const jwt = require('jsonwebtoken')
 const config = require('./config')
 
+
 module.exports = (req,res,next) => {
+    console.log("req.query.token", req.query.token);
+    console.log("config", config);
     const token = req.body.token || req.query.token || req.headers['x-access-token']
     // decode token
     if (token) {
         // verifies secret and checks exp
         jwt.verify(token, config.secret, function(err, decoded) {
             if (err) {
+                console.log("err", err);
                 // 401(권한 없음): 이 요청은 인증이 필요하다. 서버는 로그인이 필요한 페이지에 대해 이 요청을 제공할 수 있다. 상태 코드 이름이 권한 없음(Unauthorized)으로 되어 있지만 실제 뜻은 인증 안됨(Unauthenticated)에 더 가깝다.
                 return res.status(401).json({"error": true, "message": 'Unauthorized access.' });
             }
             req.decoded = decoded;
+            console.log("req", req);
             next();
         });
     } else {
