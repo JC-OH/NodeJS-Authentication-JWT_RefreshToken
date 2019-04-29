@@ -6,7 +6,7 @@ const config = require('./config')
 const tokenList = {}
 const app = express()
 
-console.log(config);
+//console.log(config);
 
 router.get('/', (req,res) => {
     res.send('Ok');
